@@ -39,9 +39,7 @@ public class DemoController {
     public Object queryPrinterStatus(@RequestBody PrinterConfigVo printerConfigVo){
 
         List<PrinterConfigPo> printerConfigPos = mavenDemoService.queryPrinterStatus(printerConfigVo.getStatus());
-        //String ss = "添加成功";i
-        //return ss;
-        int i=1/0;
+        //String ss = "添加成功";
         return new ResponseEntity<>(printerConfigPos, HttpStatus.OK);
     }
 

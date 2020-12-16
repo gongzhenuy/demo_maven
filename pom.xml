@@ -158,7 +158,11 @@
         <optional>true</optional>
        </dependency>
 
-
+        <!--单元测试 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
 
 
         <dependency>
@@ -172,6 +176,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
     </dependencies>
 
     <build>
