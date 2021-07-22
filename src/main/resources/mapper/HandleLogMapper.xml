@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinosdx.maven.dao.mapper.HandleLogMapper">
+
+    <resultMap type="com.sinosdx.maven.dao.entity.HandleLog" id="HandleLogMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="webName" column="web_name" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="appCode" column="app_code" jdbcType="VARCHAR"/>
+        <result property="portal" column="portal" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="HandleLogMap">
+        select
+          id, url, web_name, user_id, user_name, create_time, app_code, portal, type, dept_name
+        from dmo_log.handle_log
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="HandleLogMap">
+        select
+          id, url, web_name, user_id, user_name, create_time, app_code, portal, type, dept_name
+        from dmo_log.handle_log
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="HandleLogMap">
+        select
+        id, url, web_name, user_id, user_name, create_time, app_code, portal, type, dept_name
+        from dmo_log.handle_log
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="webName != null and webName != ''">
+                and web_name = #{webName}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="appCode != null and appCode != ''">
+                and app_code = #{appCode}
+            </if>
+            <if test="portal != null and portal != ''">
+                and portal = #{portal}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="deptName != null and deptName != ''">
+                and dept_name = #{deptName}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into dmo_log.handle_log(url, web_name, user_id, user_name, create_time, app_code, portal, type, dept_name)
+        values (#{url}, #{webName}, #{userId}, #{userName}, #{createTime}, #{appCode}, #{portal}, #{type}, #{deptName})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into dmo_log.handle_log(url, web_name, user_id, user_name, create_time, app_code, portal, type,
+        dept_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.url}, #{entity.webName}, #{entity.userId}, #{entity.userName}, #{entity.createTime},
+            #{entity.appCode}, #{entity.portal}, #{entity.type}, #{entity.deptName})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into dmo_log.handle_log(url, web_name, user_id, user_name, create_time, app_code, portal, type,
+        dept_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.url}, #{entity.webName}, #{entity.userId}, #{entity.userName}, #{entity.createTime},
+            #{entity.appCode}, #{entity.portal}, #{entity.type}, #{entity.deptName})
+        </foreach>
+        on duplicate key update
+        url = values(url) , web_name = values(web_name) , user_id = values(user_id) , user_name = values(user_name) ,
+        create_time = values(create_time) , app_code = values(app_code) , portal = values(portal) , type = values(type)
+        , dept_name = values(dept_name)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update dmo_log.handle_log
+        <set>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="webName != null and webName != ''">
+                web_name = #{webName},
+            </if>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="appCode != null and appCode != ''">
+                app_code = #{appCode},
+            </if>
+            <if test="portal != null and portal != ''">
+                portal = #{portal},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="deptName != null and deptName != ''">
+                dept_name = #{deptName},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from dmo_log.handle_log where id = #{id}
+    </delete>
+
+</mapper>
+

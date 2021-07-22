@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinosdx.maven.dao.mapper.RoleMenuMapper">
+
+    <resultMap type="com.sinosdx.maven.dao.entity.RoleMenu" id="RoleMenuMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
+        <result property="menuId" column="menu_id" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+        <result property="creatorDate" column="creator_date" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="RoleMenuMap">
+        select
+          id, role_id, menu_id, status, creator, modifier, creator_date, update_date
+        from conference_apply.role_menu
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <!--<select id="queryAllByLimit" resultMap="RoleMenuMap">
+        select
+          id, role_id, menu_id, status, creator, modifier, creator_date, update_date
+        from conference_apply.role_menu
+        limit #{offset}, #{limit}
+    </select>-->
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="RoleMenuMap">
+        select
+        id, role_id, menu_id, status, creator, modifier, creator_date, update_date
+        from conference_apply.role_menu
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+            <if test="menuId != null">
+                and menu_id = #{menuId}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="creator != null and creator != ''">
+                and creator = #{creator}
+            </if>
+            <if test="modifier != null and modifier != ''">
+                and modifier = #{modifier}
+            </if>
+            <if test="creatorDate != null">
+                and creator_date = #{creatorDate}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into conference_apply.role_menu(role_id, menu_id, status, creator, modifier, creator_date, update_date)
+        values (#{roleId}, #{menuId}, #{status}, #{creator}, #{modifier}, #{creatorDate}, #{updateDate})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into conference_apply.role_menu(role_id, menu_id, status, creator, modifier, creator_date, update_date)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.roleId}, #{entity.menuId}, #{entity.status}, #{entity.creator}, #{entity.modifier},
+            #{entity.creatorDate}, #{entity.updateDate})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into conference_apply.role_menu(role_id, menu_id, status, creator, modifier, creator_date, update_date)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.roleId}, #{entity.menuId}, #{entity.status}, #{entity.creator}, #{entity.modifier},
+            #{entity.creatorDate}, #{entity.updateDate})
+        </foreach>
+        on duplicate key update
+        role_id = values(role_id) , menu_id = values(menu_id) , status = values(status) , creator = values(creator) ,
+        modifier = values(modifier) , creator_date = values(creator_date) , update_date = values(update_date)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update conference_apply.role_menu
+        <set>
+            <if test="roleId != null">
+                role_id = #{roleId},
+            </if>
+            <if test="menuId != null">
+                menu_id = #{menuId},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="creator != null and creator != ''">
+                creator = #{creator},
+            </if>
+            <if test="modifier != null and modifier != ''">
+                modifier = #{modifier},
+            </if>
+            <if test="creatorDate != null">
+                creator_date = #{creatorDate},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from conference_apply.role_menu where id = #{id}
+    </delete>
+
+</mapper>
+

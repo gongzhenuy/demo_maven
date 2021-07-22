@@ -4,8 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -124,5 +127,32 @@ public class RedisService {
             redisTemplate.expire(key, timeout, TimeUnit.SECONDS);
         }
         return isSuccess;
+    }
+
+
+    /**
+     * @Author gongzhenyu
+     * @Date 2021/7/22 14:54
+     * @Describe 原子上锁  redis 2.0以上版本支持
+     * value 一般可以设置为uuid
+     */
+    public  boolean Lock(String key, String value, long timeout) {
+        //底层原理就是Redis的setnx方法
+        Boolean isSuccess = redisTemplate.opsForValue().setIfAbsent(key, value, timeout, TimeUnit.SECONDS);
+        return isSuccess;
+
+    }
+
+    /**
+     * 原子解锁
+     * 将键值对设定一个指定的时间timeout.
+     *
+     * @param key
+     */
+    public void unLock(String key, String value) {
+        //底层原理就是lua解锁脚本
+        String luaScript = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+        RedisScript<Long> booleanRedisScript = new DefaultRedisScript<Long>(luaScript, Long.class);
+        redisTemplate.execute(booleanRedisScript, Arrays.asList(key), value);
     }
 }

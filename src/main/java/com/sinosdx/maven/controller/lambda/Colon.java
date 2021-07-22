@@ -1,8 +1,6 @@
 package com.sinosdx.maven.controller.lambda;
 
 
-import com.google.common.base.Function;
-import com.sinosdx.maven.dao.po.PrinterConfigPo;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -11,7 +9,7 @@ import java.util.List;
 /**
  * @Date 2020/12/1 11:15
  * @Author gongzhenyu
- * @Describe 测试lamdba 冒号用法
+ * @Describe 测试lamdba 冒号用法 8
  */
 public class Colon {
 

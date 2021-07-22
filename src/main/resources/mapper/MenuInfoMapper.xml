@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinosdx.maven.dao.mapper.MenuInfoMapper">
+
+    <resultMap type="com.sinosdx.maven.dao.entity.MenuInfo" id="MenuInfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="menuId" column="menu_id" jdbcType="INTEGER"/>
+        <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
+        <result property="toMenuId" column="to_menu_id" jdbcType="INTEGER"/>
+        <result property="toMenuName" column="to_menu_name" jdbcType="VARCHAR"/>
+        <result property="menuState" column="menu_state" jdbcType="VARCHAR"/>
+        <result property="creater" column="creater" jdbcType="VARCHAR"/>
+        <result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="VARCHAR"/>
+        <result property="modifyTime" column="modify_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MenuInfoMap">
+        select
+          id, menu_id, menu_name, to_menu_id, to_menu_name, menu_state, creater, modifier, create_time, modify_time
+        from conference_apply.menu_info
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MenuInfoMap">
+        select
+          id, menu_id, menu_name, to_menu_id, to_menu_name, menu_state, creater, modifier, create_time, modify_time
+        from conference_apply.menu_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MenuInfoMap">
+        select
+        id, menu_id, menu_name, to_menu_id, to_menu_name, menu_state, creater, modifier, create_time, modify_time
+        from conference_apply.menu_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="menuId != null">
+                and menu_id = #{menuId}
+            </if>
+            <if test="menuName != null and menuName != ''">
+                and menu_name = #{menuName}
+            </if>
+            <if test="toMenuId != null">
+                and to_menu_id = #{toMenuId}
+            </if>
+            <if test="toMenuName != null and toMenuName != ''">
+                and to_menu_name = #{toMenuName}
+            </if>
+            <if test="menuState != null and menuState != ''">
+                and menu_state = #{menuState}
+            </if>
+            <if test="creater != null and creater != ''">
+                and creater = #{creater}
+            </if>
+            <if test="modifier != null and modifier != ''">
+                and modifier = #{modifier}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and create_time = #{createTime}
+            </if>
+            <if test="modifyTime != null and modifyTime != ''">
+                and modify_time = #{modifyTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into conference_apply.menu_info(menu_id, menu_name, to_menu_id, to_menu_name, menu_state, creater, modifier, create_time, modify_time)
+        values (#{menuId}, #{menuName}, #{toMenuId}, #{toMenuName}, #{menuState}, #{creater}, #{modifier}, #{createTime}, #{modifyTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into conference_apply.menu_info(menu_id, menu_name, to_menu_id, to_menu_name, menu_state, creater,
+        modifier, create_time, modify_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.menuId}, #{entity.menuName}, #{entity.toMenuId}, #{entity.toMenuName}, #{entity.menuState},
+            #{entity.creater}, #{entity.modifier}, #{entity.createTime}, #{entity.modifyTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into conference_apply.menu_info(menu_id, menu_name, to_menu_id, to_menu_name, menu_state, creater,
+        modifier, create_time, modify_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.menuId}, #{entity.menuName}, #{entity.toMenuId}, #{entity.toMenuName}, #{entity.menuState},
+            #{entity.creater}, #{entity.modifier}, #{entity.createTime}, #{entity.modifyTime})
+        </foreach>
+        on duplicate key update
+        menu_id = values(menu_id) , menu_name = values(menu_name) , to_menu_id = values(to_menu_id) , to_menu_name =
+        values(to_menu_name) , menu_state = values(menu_state) , creater = values(creater) , modifier = values(modifier)
+        , create_time = values(create_time) , modify_time = values(modify_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update conference_apply.menu_info
+        <set>
+            <if test="menuId != null">
+                menu_id = #{menuId},
+            </if>
+            <if test="menuName != null and menuName != ''">
+                menu_name = #{menuName},
+            </if>
+            <if test="toMenuId != null">
+                to_menu_id = #{toMenuId},
+            </if>
+            <if test="toMenuName != null and toMenuName != ''">
+                to_menu_name = #{toMenuName},
+            </if>
+            <if test="menuState != null and menuState != ''">
+                menu_state = #{menuState},
+            </if>
+            <if test="creater != null and creater != ''">
+                creater = #{creater},
+            </if>
+            <if test="modifier != null and modifier != ''">
+                modifier = #{modifier},
+            </if>
+            <if test="createTime != null and createTime != ''">
+                create_time = #{createTime},
+            </if>
+            <if test="modifyTime != null and modifyTime != ''">
+                modify_time = #{modifyTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from conference_apply.menu_info where id = #{id}
+    </delete>
+
+</mapper>
+
