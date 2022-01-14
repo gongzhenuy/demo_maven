@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -19,14 +20,16 @@ public class RedisService {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
     /**
      * save(Redis缓存存储)
+     *
      * @param value
      * @param key
      * @param times 过期时间，单位秒（值为null时缺省设置 30分钟）
-     * void
-     * @exception
-     * @since  1.0.0
+     *              void
+     * @throws
+     * @since 1.0.0
      */
     public void save(final String value, final String key, final Integer times) {
         redisTemplate.opsForValue().set(key, value, times, TimeUnit.SECONDS);
@@ -40,10 +43,11 @@ public class RedisService {
 
     /**
      * 判断是否存在key值
+     *
      * @param key 缓存key
      * @return boolean
      */
-    public boolean exists(final String key){
+    public boolean exists(final String key) {
         return redisTemplate.hasKey(key);
     }
 
@@ -53,12 +57,13 @@ public class RedisService {
 
     /**
      * 更新缓存key生存时间
-     * @param key key
+     *
+     * @param key   key
      * @param times 时间
      */
     public void expire(final String key, final Integer times) {
-        Integer time = 30*60;
-        if(times != null){
+        Integer time = 30 * 60;
+        if (times != null) {
             time = times;
         }
         redisTemplate.expire(key, time, TimeUnit.SECONDS);
@@ -87,15 +92,15 @@ public class RedisService {
 
     /**
      * 返回通配key
+     *
      * @return list
      */
-    public Set<String> hasKeys(String pattern){
+    public Set<String> hasKeys(String pattern) {
         return redisTemplate.keys(pattern);
     }
 
 
     /**
-     *
      * @param key
      * @return
      */
@@ -107,7 +112,7 @@ public class RedisService {
         return redisTemplate.opsForValue().increment(key, num);
     }
 
-    public long getExpire(String key){
+    public long getExpire(String key) {
         return redisTemplate.getExpire(key);
     }
 
@@ -119,7 +124,7 @@ public class RedisService {
      * @param timeout 键值对缓存的时间，单位是秒
      * @return 设置成功返回true，否则返回false
      */
-    public  boolean tryLock(String key, String value, long timeout) {
+    public boolean tryLock(String key, String value, long timeout) {
         //底层原理就是Redis的setnx方法
         boolean isSuccess = redisTemplate.opsForValue().setIfAbsent(key, value);
         if (isSuccess) {
@@ -132,11 +137,38 @@ public class RedisService {
 
     /**
      * @Author gongzhenyu
+     * @Date 2022/1/12 17:11
+     * @Describe 添加有序集合
+     */
+    public void hmset(String key, String value, Double score) {
+        redisTemplate.opsForZSet().add(key, value, score);
+    }
+
+
+    /**
+     * @Author gongzhenyu
+     * @Date 2022/1/12 17:14
+     * @Describe
+     */
+    public void hashset(String key, String hkey, String hvalue) {
+        redisTemplate.opsForHash().put(key, hkey, hvalue);
+    }
+
+    public void hashMap(String key, Map map) {
+        redisTemplate.opsForHash().putAll(key, map);
+    }
+
+    public void testHash(){
+        redisTemplate.opsForHash().delete("myhash", "id");
+    }
+
+    /**
+     * @Author gongzhenyu
      * @Date 2021/7/22 14:54
      * @Describe 原子上锁  redis 2.0以上版本支持
      * value 一般可以设置为uuid
      */
-    public  boolean Lock(String key, String value, long timeout) {
+    public boolean Lock(String key, String value, long timeout) {
         //底层原理就是Redis的setnx方法
         Boolean isSuccess = redisTemplate.opsForValue().setIfAbsent(key, value, timeout, TimeUnit.SECONDS);
         return isSuccess;
