@@ -1,9 +1,9 @@
 package com.sinosdx.maven.dao.po;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @Document(collection="book")
 public class Book {
-    @Id
+
     private String id;
     private Integer price;
     private String name;

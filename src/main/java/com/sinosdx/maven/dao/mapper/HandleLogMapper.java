@@ -1,8 +1,9 @@
 package com.sinosdx.maven.dao.mapper;
 
-import com.sinosdx.maven.dao.entity.HandleLog;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sinosdx.maven.dao.po.HandleLog;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,9 +12,10 @@ import java.util.List;
  *
  * @Author gongzhenyu
  * @Date 2021-05-13 17:56:27
+ * @Describe 对应HandleLogMapper.xml中方法
  */
-@Mapper
-public interface HandleLogMapper {
+@Repository
+public interface HandleLogMapper extends BaseMapper<HandleLog> {
 
     /**
      * @param id 主键

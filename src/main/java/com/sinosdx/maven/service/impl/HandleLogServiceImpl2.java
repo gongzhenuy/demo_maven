@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sinosdx.maven.dao.from.HandleLogFrom;
-import com.sinosdx.maven.dao.po.HandleLog;
 import com.sinosdx.maven.dao.mapper.HandleLogMapper;
+import com.sinosdx.maven.dao.po.HandleLog;
 import com.sinosdx.maven.dao.vo.PageResultVo;
 import com.sinosdx.maven.service.HandleLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ import java.util.List;
  * @Author gongzhenyu
  * @Date 2021-05-13 17:56:27
  */
-@Service("HandleLogService1")
-public class HandleLogServiceImpl implements HandleLogService {
+@Service("HandleLogService2")
+public class HandleLogServiceImpl2 implements HandleLogService {
 
     @Autowired
     private HandleLogMapper handleLogMapper;

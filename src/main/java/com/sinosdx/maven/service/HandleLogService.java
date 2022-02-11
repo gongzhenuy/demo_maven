@@ -1,6 +1,7 @@
 package com.sinosdx.maven.service;
 
-import com.sinosdx.maven.dao.entity.HandleLog;
+import com.sinosdx.maven.dao.from.HandleLogFrom;
+import com.sinosdx.maven.dao.po.HandleLog;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public interface HandleLogService {
      * @Describe 通过ID查询单条数据
      */
     HandleLog queryById(Integer id);
+
+    Object selectList(HandleLogFrom handleLogFrom);
 
     /**
      * @param offset 查询起始位置

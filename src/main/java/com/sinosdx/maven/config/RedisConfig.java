@@ -11,7 +11,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 /**
  * @Date 2022/1/13 10:36
  * @Author gongzhenyu
- * @Describe
+ * @Describe 当使用redisTemplate<String,Object>时必须格式化，否则会导致乱码
  */
 @Configuration
 public class RedisConfig {

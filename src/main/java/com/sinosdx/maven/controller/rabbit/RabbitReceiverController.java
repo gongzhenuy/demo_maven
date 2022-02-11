@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
  * @Author gongzhenyu
  * @Describe
  */
-@Component
-@RabbitListener(queues = "lyhTest1")
-public class RabbitReceiverController {
-
-    @RabbitHandler
-    public void receiver(String msg){
-        System.out.println("Test1 receiver1:"+msg);
-    }
-}
+//@Component
+//@RabbitListener(queues = "lyhTest1")
+//public class RabbitReceiverController {
+//
+//    @RabbitHandler
+//    public void receiver(String msg){
+//        System.out.println("Test1 receiver1:"+msg);
+//    }
+//}

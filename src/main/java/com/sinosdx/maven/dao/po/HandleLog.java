@@ -1,13 +1,15 @@
-package com.sinosdx.maven.dao.entity;
+package com.sinosdx.maven.dao.po;
+
+import com.sinosdx.maven.dao.from.BaseBean;
 
 import java.util.Date;
 import java.io.Serializable;
 
+
 /**
- * (HandleLog)实体类
- *
- * @author makejava
- * @since 2021-05-13 17:56:27
+ * @Author gongzhenyu
+ * @Date 2022/1/14 14:47
+ * @Describe
  */
 public class HandleLog implements Serializable {
     private static final long serialVersionUID = 462917926479028848L;
@@ -34,6 +36,14 @@ public class HandleLog implements Serializable {
 
     private String deptName;
 
+//    public HandleLog(Integer id, String url) {
+//        this.id = id;
+//        this.url = url;
+//    }
+
+//    public HandleLog() {
+//
+//    }
 
     public Integer getId() {
         return id;

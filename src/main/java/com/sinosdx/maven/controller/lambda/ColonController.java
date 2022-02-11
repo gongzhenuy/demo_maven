@@ -11,7 +11,7 @@ import java.util.List;
  * @Author gongzhenyu
  * @Describe 测试lamdba 冒号用法 8
  */
-public class Colon {
+public class ColonController {
 
 
     /**
@@ -22,7 +22,7 @@ public class Colon {
     @Test
     public void test() {
         List<String> list = Arrays.asList("a", "b", "c", "d");
-        list.forEach(Colon::print);
+        list.forEach(ColonController::print);
 
         //list.forEach((s)->Colon.print(s));
 
@@ -37,7 +37,7 @@ public class Colon {
     @Test
     public void test2() {
         List<String> list = Arrays.asList("a", "b", "c", "e");
-        list.forEach(new Colon()::print2);
+        list.forEach(new ColonController()::print2);
     }
 
     /**

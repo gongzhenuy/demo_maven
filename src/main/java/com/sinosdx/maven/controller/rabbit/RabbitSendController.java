@@ -15,13 +15,13 @@ import java.util.Date;
 @RestController
 public class RabbitSendController {
 
-    @Autowired
-    private AmqpTemplate amqpTemplate;
+//    @Autowired
+//    private AmqpTemplate amqpTemplate;
 
-    @RequestMapping("/send")
-    public String send(){
-        String content="Date:"+new Date();
-        amqpTemplate.convertAndSend("lyhTest1",content);
-        return content;
-    }
+//    @RequestMapping("/send")
+//    public String send(){
+//        String content="Date:"+new Date();
+//        amqpTemplate.convertAndSend("lyhTest1",content);
+//        return content;
+//    }
 }
