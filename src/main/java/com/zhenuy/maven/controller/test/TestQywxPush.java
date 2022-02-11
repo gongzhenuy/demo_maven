@@ -31,11 +31,10 @@ public class TestQywxPush {
                 message.put("content","nihao");
 
                 QywxUtils qywxUtils = MessageFactory.qywxUtils();
-                String access_token = qywxUtils.getAccess_token("SWmSfqXGTUqRlHFFOP5cLRH0HxmHVpryOwQA8aAJU78");
                 qywxUtils.sendMessage("1000037","","GongZhenYu","","text","",message);
 
                 EmailUtils emailUtils= MessageFactory.emailUtils();
-                emailUtils.sendEmail("你好","你好","systemadmin@saicmotor.com","集团", Arrays.asList("zhenyu.gong@sinosdx.com"));
+                emailUtils.sendEmail("你好","你好","111@.com","集团", Arrays.asList("zhenyu.gong@qq.com"));
             }
         });
     }
